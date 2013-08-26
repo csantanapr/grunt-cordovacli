@@ -1,0 +1,47 @@
+{
+  "name": "grunt-cordovacli",
+  "description": "Wraps a web application as a hybrid app with Cordova CLI",
+  "version": "0.1.0",
+  "homepage": "https://github.com/csantana23/grunt-cordovacli",
+  "author": {
+    "name" : "Carlos Santana",
+    "url" : "https://github.com/csantana23"
+  
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/csantana23/grunt-cordovacli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/csantana23/grunt-cordovacli/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://github.com/csantana23/grunt-cordovacli/blob/master/LICENSE-Apache-2.0"
+    }
+  ],
+  "main": "Gruntfile.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.1"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.1"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "license": "Apache-2.0"
+}
