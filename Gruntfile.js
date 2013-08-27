@@ -99,6 +99,13 @@ module.exports = function (grunt) {
                     command: 'build',
                     path: 'myHybridAppFolder'
                 }
+            },
+            emulate_android: {
+                options: {
+                    command: 'emulate',
+                    path: 'myHybridAppFolder',
+                    platforms: ['android']
+                }
             }
         },
 
