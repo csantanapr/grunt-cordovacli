@@ -1,6 +1,6 @@
 # grunt-cordovacli
 
-> "Wraps a web application as a hybrid app with Cordova CLI"
+> "Wraps a web application as a hybrid app with [Apache Cordova CLI](http://cordova.io)"
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -18,69 +18,167 @@ grunt.loadNpmTasks('grunt-cordovacli');
 ```
 
 ## The "cordovacli" task
+_Run this task with the `grunt cordovacli` command._
 
 ### Overview
 In your project's Gruntfile, add a section named `cordovacli` to the data object passed into `grunt.initConfig()`.
 
+### Usage Examples
+
 ```js
-grunt.initConfig({
-  cordovacli: {
-    options: {
-      // Task-specific options go here.
+cordovacli: {
+    create: {
+        options: {
+            command: 'create',
+            path: 'myHybridAppFolder',
+            id: 'com.myHybridApp',
+            name: 'myHybridApp'
+        }
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
+    add_platform: {
+        options: {
+            command: 'platform',
+            path: 'myHybridAppFolder',
+            action: 'add',
+            platforms: ['ios', 'android']
+        }
     },
-  },
-})
+    add_plugin: {
+        options: {
+            command: 'plugin',
+            path: 'myHybridAppFolder',
+            action: 'add',
+            plugins: [
+                'vibration',
+                'device-orientation',
+                'network-information',
+                'device',
+                'contacts',
+                'media-capture',
+                'inappbrowser',
+                'globalization',
+                'geolocation',
+                'file',
+                'dialogs'
+            ]
+        }
+    },
+    build_all: {
+        options: {
+            command: 'build',
+            path: 'myHybridAppFolder'
+        }
+    },
+    emulate_android: {
+        options: {
+            command: 'emulate',
+            path: 'myHybridAppFolder',
+            platforms: ['android']
+        }
+    }
+}
 ```
+
 
 ### Options
 
-#### options.separator
+#### options.command
 Type: `String`
-Default value: `',  '`
+Valid values: `'create'` `'platform'` `'plugin'` `'build'` `'emulate'` `'prepare'` `'compile'`
 
-A string value that is used to do something with whatever.
+Specify the cordova command
 
-#### options.punctuation
+#### options.id
 Type: `String`
-Default value: `'.'`
+Default value: `'com.hello'`
+Use with Command: `'create'`
 
-A string value that is used to do something else with whatever else.
+Specify the ID (reverse-domain-style package name) for the Cordova App
 
-### Usage Examples
+#### options.name
+Type: `String`
+Default value: `'Hello'`
+Use with Command: `'create'`
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+Specify the Name for the Cordova App
 
-```js
-grunt.initConfig({
-  cordovacli: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+#### options.path
+Type: `String`
+Default value: `'.cordova'` 
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+Specify the path to the Cordova project directory
 
-```js
-grunt.initConfig({
-  cordovacli: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
-```
+#### options.action
+Type: `String`
+Valid value: `'add'` `'rm'` `'remove'`
+Required for Commands: `'platform'` 
+
+Specify the action to perform
+
+#### options.plugins
+Type: `String`
+Shortcut values for Apache Cordova plugins:
+`'vibration'`
+`'device-orientation'`
+`'network-information'`
+`'device'`
+`'contacts`'
+`'media-capture'`
+`'inappbrowser'`
+`'globalization'`
+`'geolocation'`
+`'file'`
+`'dialogs'`
+`'camera'`
+`'media'`
+`'device-motion'`
+                
+Use with Commands: `'plugin'` 
+
+Specify the plugin to add to the Cordova project
+The value of plugin will be use with plugin_path_ext and plugin_base_path
+
+`'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'plugin-value'.git'`
+
+If you want to use a different repo for see options:
+
+- options.plugin_path_ext: '.git'
+- options.plugin_base_path: 'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'
+
+If you want to use a local path:
+
+- options.plugin_path: '~/plugins/myhwplugin'
+            
+#### options.plugin_path
+Type: `String` or `Boolean`
+Default value: `'false'`
+Applicable Commands: `'plugin'`
+
+Specify the path to plugin to add or remove
+
+#### options.plugin_path_ext
+Type: `String`
+Default value: `'.git'`
+Applicable Commands: `'plugin'`
+
+Specify the extension for repo if plugin_path: false
+
+#### options.plugin_base_path
+Type: `String`
+Default value: `'.git'`
+Applicable Commands: `'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'`
+
+Specify the base url for repo if plugin_path: false
+
+#### options.platforms
+Type: `String`
+Valid value: `'ios'` `'android'` `'blackberry10'` `'wp7'` `'wp8'`
+Required for Commands: `'platform'`
+Not Applicable for Commands: `'plugin'`
+Optional for other commands
+
+Specify the platform type
+
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
