@@ -50,7 +50,11 @@ module.exports = function (grunt) {
             msg = '',
             args = [],
             cmd_opts =  {};
-
+        
+        if (options.command !== "create") {
+            grunt.log.writeln('Setting Current Working Directory (CWD) to ' + options.path);
+            cmd_opts.cwd = options.path;
+        }
         if (options.command === "create") {
             // compose create command
             // cordova create <PATH> [ID] [NAME]
@@ -64,18 +68,15 @@ module.exports = function (grunt) {
                 runCordova(cordovacli, args, cmd_opts, done);
             });
         } else if (options.plugins) {
-            cmd_opts.cwd = options.path;
             //plugin(s) [{add|remove|rm} <PATH|URI>]
             options.plugins.forEach(function (p) {
                 if (options.plugin_path === false) {
                     p = options.plugin_base_path + p + options.plugin_path_ext;
                 }
-
                 args = [options.command, options.action, p ];
                 runCordova(cordovacli, args, cmd_opts, done);
             });
         } else {
-            cmd_opts.cwd = options.path;
             if (options.platforms) {
                 options.platforms.forEach(function (p) {
                     args = [options.command, p ];

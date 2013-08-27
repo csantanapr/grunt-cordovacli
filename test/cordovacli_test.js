@@ -1,5 +1,5 @@
-'use strict';
 
+/*global require, exports */
 var grunt = require('grunt');
 
 /*
@@ -23,26 +23,18 @@ var grunt = require('grunt');
 */
 
 exports.cordovacli = {
-  setUp: function(done) {
-    // setup here if necessary
-    done();
-  },
-  default_options: function(test) {
-    test.expect(1);
+    setUp: function (done) {
+        'use strict';
+        // setup here if necessary
+        done();
+    },
+    cordova_test: function (test) {
+        'use strict';
+        test.expect(1);
 
-    var actual = grunt.file.read('tmp/default_options');
-    var expected = grunt.file.read('test/expected/default_options');
-    test.equal(actual, expected, 'should describe what the default behavior is.');
-
-    test.done();
-  },
-  custom_options: function(test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/custom_options');
-    var expected = grunt.file.read('test/expected/custom_options');
-    test.equal(actual, expected, 'should describe what the custom option(s) behavior is.');
-
-    test.done();
-  },
+        var actual = grunt.file.exists("myHybridAppFolder/.cordova/config.json"),
+            expected = true;
+        test.equal(actual, expected, 'should create a cordova project with a .cordova/config.json');
+        test.done();
+    }
 };

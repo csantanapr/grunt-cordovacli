@@ -25,52 +25,50 @@ module.exports = function (grunt) {
                 jshintrc: '.jshintrc'
             }
         },
-
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp']
-        },
-
-        // Configuration to be run (and then tested).
-        cordovatest: {
-            default_options: {
-                options: {
-                },
-                files: {
-                    'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-                }
-            },
-            custom_options: {
-                options: {
-                    separator: ': ',
-                    punctuation: ' !!!'
-                },
-                files: {
-                    'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
-                }
-            }
+            tests: ['tmp', '.cordova', 'myHybridAppFolder']
         },
         cordovacli: {
+            options: {
+                path: 'myHybridAppFolder'
+            },
             create: {
                 options: {
                     command: 'create',
-                    path: 'myHybridAppFolder',
                     id: 'com.myHybridApp', //optional
                     name: 'myHybridApp'    //optional
                 }
             },
+            /* I think there is a bug in cordova cli that doesn't handle running in parallel
+               Doing individual add platform to work around problem
             add_platform: {
                 options: {
                     command: 'platform',
-                    path: 'myHybridAppFolder',
                     action: 'add',                  //valid actions for command platform are add , remove, rm
-                    platforms: ['ios', 'android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
+                    platforms: ['ios', 'android', 'blackberry10', 'wp8']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
                 }
             },
+            */
+            add_platform_ios: {
+                options: {
+                    command: 'platform',
+                    action: 'add',                  //valid actions for command platform are add , remove, rm
+                    platforms: ['ios']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
+                }
+            },
+            add_platform_android: {
+                options: {
+                    command: 'platform',
+                    action: 'add',                  //valid actions for command platform are add , remove, rm
+                    platforms: ['android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
+                }
+            },
+            /* I think there is a bug in cordova cli that doesn't handle running in parallel
+               Doing individual add plugin to work around problem
             add_plugin: {
                 options: {
                     command: 'plugin',
-                    path: 'myHybridAppFolder',
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
                     plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
                         'vibration',
@@ -87,23 +85,99 @@ module.exports = function (grunt) {
                     ]
                 }
             },
+            */
+            add_plugin_vibration: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'vibration']
+                }
+            },
+            add_plugin_device_orientation: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'device-orientation']
+                }
+            },
+            add_plugin_network_information: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'network-information']
+                }
+            },
+            add_plugin_device: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'device']
+                }
+            },
+            add_plugin_contacts: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'device']
+                }
+            },
+            add_plugin_media_capture: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'media-capture']
+                }
+            },
+            add_plugin_inappbrowser: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'inappbrowser']
+                }
+            },
+            add_plugin_globalization: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'globalization']
+                }
+            },
+            add_plugin_geolocation: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'geolocation']
+                }
+            },
+            add_plugin_dialogs: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'dialogs']
+                }
+            },
+            add_plugin_file: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',
+                    plugins: [ 'file']
+                }
+            },
             build_ios: {
                 options: {
                     command: 'build',
-                    path: 'myHybridAppFolder',
                     platforms: ['ios']
                 }
             },
-            build_all: {
+            build_android: {
                 options: {
                     command: 'build',
-                    path: 'myHybridAppFolder'
+                    platforms: ['android']
                 }
             },
             emulate_android: {
                 options: {
                     command: 'emulate',
-                    path: 'myHybridAppFolder',
                     platforms: ['android']
                 }
             }
@@ -126,7 +200,7 @@ module.exports = function (grunt) {
 
     // Whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'cordovatest', 'nodeunit']);
+    grunt.registerTask('test', ['clean', 'cordovacli:create', 'nodeunit']);
 
     // By default, lint and run all tests.
     grunt.registerTask('default', ['jshint', 'test']);

@@ -1,6 +1,40 @@
 # grunt-cordovacli
 
-> "Wraps a web application as a hybrid app with [Apache Cordova CLI](http://cordova.io)"
+> "Wraps a web application as a hybrid app with [Apache Cordova CLI 3.x](http://cordova.io)"
+
+More information about the new [Apache Cordova 3.x Command-line Interface](http://cordova.apache.org/docs/en/3.0.0/guide_cli_index.md.html#The%20Command-line%20Interface)
+
+````
+Synopsis
+
+    cordova command [options]
+
+Global Commands
+
+    create <PATH> [ID] [NAME] ............... creates a cordova project in the specified PATH, with
+                                               optional NAME and ID (reverse-domain-style package name)
+
+Project-Level Commands
+
+    platform(s) [{add|remove|rm} <PLATFORM>] . add or remove a specified PLATFORM, OR
+                                                list all installed, available and unavailable platforms
+    plugin(s) [{add|remove|rm} <PATH|URI>] ... add or remove a plugin from the specified PATH or URI, OR
+                                                list all currently installed plugins
+    prepare [PLATFORM.] ..................... copies files for specified platforms, or all platforms,
+                                               so that the project is ready to build in each SDK.
+    compile [PLATFORM.] ..................... builds the app for specified platforms, or all platforms
+    build [PLATFORM..] ...................... shortcut for prepare, then compile
+    emulate [PLATFORM..] .................... deploys app in specified (or all) platforms' emulator,
+                                                opening emulator if necessary
+    run [PLATFORM..] ........................ deploys app on specified (or all) platform devices, which
+                                                must be properly connected and configured in each SDK
+    serve <PLATFORM> [PORT] .................. runs a local web server for the specified platform's www/
+                                                directory, with optional port number that defaults to 8000.
+                                                (Note: you must edit the native code to reference the server)
+````
+                                                
+
+
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -25,54 +59,125 @@ In your project's Gruntfile, add a section named `cordovacli` to the data object
 
 ### Usage Examples
 
-```js
+```
+
 cordovacli: {
+    options: {
+        path: 'myHybridAppFolder'
+    },
     create: {
         options: {
             command: 'create',
-            path: 'myHybridAppFolder',
-            id: 'com.myHybridApp',
-            name: 'myHybridApp'
+            id: 'com.myHybridApp', 
+            name: 'myHybridApp'    
         }
     },
-    add_platform: {
+    add_platform_ios: {
         options: {
             command: 'platform',
-            path: 'myHybridAppFolder',
-            action: 'add',
-            platforms: ['ios', 'android']
+            action: 'add',                  
+            platforms: ['ios']          
         }
     },
-    add_plugin: {
+    add_platform_android: {
+        options: {
+            command: 'platform',
+            action: 'add',                 
+            platforms: ['android']         
+        }
+    },
+    add_plugin_vibration: {
         options: {
             command: 'plugin',
-            path: 'myHybridAppFolder',
             action: 'add',
-            plugins: [
-                'vibration',
-                'device-orientation',
-                'network-information',
-                'device',
-                'contacts',
-                'media-capture',
-                'inappbrowser',
-                'globalization',
-                'geolocation',
-                'file',
-                'dialogs'
-            ]
+            plugins: [ 'vibration']
         }
     },
-    build_all: {
+    add_plugin_device_orientation: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'device-orientation']
+        }
+    },
+    add_plugin_network_information: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'network-information']
+        }
+    },
+    add_plugin_device: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'device']
+        }
+    },
+    add_plugin_contacts: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'device']
+        }
+    },
+    add_plugin_media_capture: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'media-capture']
+        }
+    },
+    add_plugin_inappbrowser: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'inappbrowser']
+        }
+    },
+    add_plugin_globalization: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'globalization']
+        }
+    },
+    add_plugin_geolocation: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'geolocation']
+        }
+    },
+    add_plugin_dialogs: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'dialogs']
+        }
+    },
+    add_plugin_file: {
+        options: {
+            command: 'plugin',
+            action: 'add',
+            plugins: [ 'file']
+        }
+    },
+    build_ios: {
         options: {
             command: 'build',
-            path: 'myHybridAppFolder'
+            platforms: ['ios']
+        }
+    },
+    build_android: {
+        options: {
+            command: 'build',
+            platforms: ['android']
         }
     },
     emulate_android: {
         options: {
             command: 'emulate',
-            path: 'myHybridAppFolder',
             platforms: ['android']
         }
     }
@@ -115,8 +220,17 @@ Required for Commands: `'platform'`
 
 Specify the action to perform
 
+#### options.platforms
+Type: `String` `String` `'Array'`
+Valid value: `'ios'` `'android'` `'blackberry10'` `'wp7'` `'wp8'`
+Required for Commands: `'platform'`
+Not Applicable for Commands: `'plugin'`
+Optional for other commands
+
+Specify the platform type
+
 #### options.plugins
-Type: `String`
+Type: `String` `'Array'`
 Shortcut values for Apache Cordova plugins:
 `'vibration'`
 `'device-orientation'`
@@ -170,14 +284,7 @@ Applicable Commands: `'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'`
 
 Specify the base url for repo if plugin_path: false
 
-#### options.platforms
-Type: `String`
-Valid value: `'ios'` `'android'` `'blackberry10'` `'wp7'` `'wp8'`
-Required for Commands: `'platform'`
-Not Applicable for Commands: `'plugin'`
-Optional for other commands
 
-Specify the platform type
 
 
 ## Contributing
