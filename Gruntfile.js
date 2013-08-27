@@ -55,43 +55,49 @@ module.exports = function (grunt) {
                 options: {
                     command: 'create',
                     path: 'myHybridAppFolder',
-                    id: 'com.myHybridApp',
-                    name: 'myHybridApp',
-                    debug: true
+                    id: 'com.myHybridApp', //optional
+                    name: 'myHybridApp'    //optional
                 }
             },
             add_platform: {
                 options: {
                     command: 'platform',
                     path: 'myHybridAppFolder',
-                    action: 'add',
-                    platforms: ['ios', 'android']
+                    action: 'add',                  //valid actions for command platform are add , remove, rm
+                    platforms: ['ios', 'android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
                 }
             },
             add_plugin: {
                 options: {
                     command: 'plugin',
                     path: 'myHybridAppFolder',
-                    action: 'add',
-                    plugins: [
+                    action: 'add',                  //valid actions for command plugin are add , remove, rm
+                    plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
                         'vibration',
-                        'camera',
                         'device-orientation',
                         'network-information',
-                        'media',
                         'device',
                         'contacts',
-                        'battery-status',
-                        'splashscreen',
                         'media-capture',
                         'inappbrowser',
                         'globalization',
                         'geolocation',
                         'file',
-                        'dialogs',
-                        'device-motion',
-                        'console'
+                        'dialogs'
                     ]
+                }
+            },
+            build_ios: {
+                options: {
+                    command: 'build',
+                    path: 'myHybridAppFolder',
+                    platforms: ['ios']
+                }
+            },
+            build_all: {
+                options: {
+                    command: 'build',
+                    path: 'myHybridAppFolder'
                 }
             }
         },
