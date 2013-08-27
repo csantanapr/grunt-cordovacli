@@ -26,13 +26,25 @@ module.exports = function (grunt) {
             function (err, result) {
                 if (err) {
                     grunt.log.error(err);
-                    return done(false);
+                } else {
+                    grunt.log.success('Done-> ' + cmd + ' ' + args.join(' '));
                 }
-                grunt.log.success('Cordova CLI Successfully done');
-                done();
+                done(err, result);
+                
             }
         );
-    };
+    },
+        runCordovaParallel = function (tasks, done) {
+            grunt.util.async.parallel(tasks, function (err, result) {
+                if (err) {
+                    grunt.log.writeln('Error-> with Parallel tasks' + err);
+                    done(false);
+                } else {
+                    grunt.log.writeln('Success-> with Parallel tasks');
+                    done();
+                }
+            });
+        };
 
     grunt.registerMultiTask('cordovacli', '"Wraps a web application as a hybrid app with Cordova CLI"', function () {
     // Merge task-specific and/or target-specific options with these defaults.
@@ -49,7 +61,8 @@ module.exports = function (grunt) {
             cordovacli = 'cordova',
             msg = '',
             args = [],
-            cmd_opts =  {};
+            cmd_opts =  {},
+            tasks = [];
         
         if (options.command !== "create") {
             grunt.log.writeln('Setting Current Working Directory (CWD) to ' + options.path);
@@ -61,23 +74,34 @@ module.exports = function (grunt) {
             args = [options.command, options.path, options.id, options.name];
             runCordova(cordovacli, args, cmd_opts, done);
         } else if (options.command === "platform" && options.platforms) {
-            cmd_opts.cwd = options.path;
             //platform(s) [{add|remove|rm} <PLATFORM>]
+            tasks = [];
+            tasks.length = 0;
             options.platforms.forEach(function (p) {
-                args = [options.command, options.action, p ];
-                runCordova(cordovacli, args, cmd_opts, done);
+                var f;
+                f = function (callback) {
+                    runCordova(cordovacli, [options.command, options.action, p ], cmd_opts, callback);
+                };
+                tasks.push(f);
             });
+            runCordovaParallel(tasks, done);
         } else if (options.plugins) {
-            //plugin(s) [{add|remove|rm} <PATH|URI>]
+            tasks = [];
+            tasks.length = 0;
             options.plugins.forEach(function (p) {
+                var f;
                 if (options.plugin_path === false) {
                     p = options.plugin_base_path + p + options.plugin_path_ext;
                 }
-                args = [options.command, options.action, p ];
-                runCordova(cordovacli, args, cmd_opts, done);
+                f = function (callback) {
+                    runCordova(cordovacli, [options.command, options.action, p ], cmd_opts, callback);
+                };
+                tasks.push(f);
             });
+            runCordovaParallel(tasks, done);
         } else {
             if (options.platforms) {
+                /*
                 options.platforms.forEach(function (p) {
                     args = [options.command, p ];
                     if (options.command === "serve" && options.port) {
@@ -85,6 +109,23 @@ module.exports = function (grunt) {
                     }
                     runCordova(cordovacli, args, cmd_opts, done);
                 });
+                */
+                tasks = [];
+                tasks.length = 0;
+                options.platforms.forEach(function (p) {
+                    var f;
+                    f = function (callback) {
+                        if (options.command === "serve" && options.port) {
+                            runCordova(cordovacli, [options.command, p, options.port], cmd_opts, callback);
+                        } else {
+                            runCordova(cordovacli, [options.command, p ], cmd_opts, callback);
+                        }
+                        
+                    };
+                    tasks.push(f);
+                });
+                runCordovaParallel(tasks, done);
+                    
             } else {
                 args = [options.command];
                 if (options.command === "serve" && options.port) {

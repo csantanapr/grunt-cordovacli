@@ -40,32 +40,16 @@ module.exports = function (grunt) {
                     name: 'myHybridApp'    //optional
                 }
             },
-            /* I think there is a bug in cordova cli that doesn't handle running in parallel
-               Doing individual add platform to work around problem
             add_platform: {
                 options: {
                     command: 'platform',
                     action: 'add',                  //valid actions for command platform are add , remove, rm
-                    platforms: ['ios', 'android', 'blackberry10', 'wp8']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
+                    platforms: ['ios', 'android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
                 }
             },
-            */
-            add_platform_ios: {
-                options: {
-                    command: 'platform',
-                    action: 'add',                  //valid actions for command platform are add , remove, rm
-                    platforms: ['ios']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
-                }
-            },
-            add_platform_android: {
-                options: {
-                    command: 'platform',
-                    action: 'add',                  //valid actions for command platform are add , remove, rm
-                    platforms: ['android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
-                }
-            },
-            /* I think there is a bug in cordova cli that doesn't handle running in parallel
+            /* There is a bug in cordova cli that doesn't handle running in parallel for plugins issue open here: https://issues.apache.org/jira/browse/CB-4679
                Doing individual add plugin to work around problem
+               
             add_plugin: {
                 options: {
                     command: 'plugin',
@@ -163,16 +147,10 @@ module.exports = function (grunt) {
                     plugins: [ 'file']
                 }
             },
-            build_ios: {
+            build: {
                 options: {
                     command: 'build',
-                    platforms: ['ios']
-                }
-            },
-            build_android: {
-                options: {
-                    command: 'build',
-                    platforms: ['android']
+                    platforms: ['ios', 'android']
                 }
             },
             emulate_android: {

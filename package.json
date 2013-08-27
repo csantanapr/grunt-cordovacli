@@ -1,7 +1,7 @@
 {
   "name": "grunt-cordovacli",
   "description": "Wraps a web application as a hybrid app with Apache Cordova CLI 3.x",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "homepage": "https://github.com/csantanapr/grunt-cordovacli",
   "author": {
     "name": "Carlos Santana",

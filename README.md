@@ -72,18 +72,11 @@ cordovacli: {
             name: 'myHybridApp'    
         }
     },
-    add_platform_ios: {
+    add_platform: {
         options: {
             command: 'platform',
             action: 'add',                  
-            platforms: ['ios']          
-        }
-    },
-    add_platform_android: {
-        options: {
-            command: 'platform',
-            action: 'add',                 
-            platforms: ['android']         
+            platforms: ['ios', 'android']          
         }
     },
     add_plugin_vibration: {
@@ -221,7 +214,7 @@ Required for Commands: `'platform'`
 Specify the action to perform
 
 #### options.platforms
-Type: `String` `String` `'Array'`
+Type: `String` `'Array'`
 Valid value: `'ios'` `'android'` `'blackberry10'` `'wp7'` `'wp8'`
 Required for Commands: `'platform'`
 Not Applicable for Commands: `'plugin'`
@@ -230,7 +223,7 @@ Optional for other commands
 Specify the platform type
 
 #### options.plugins
-Type: `String` `'Array'`
+Type: `String` `'Array'` (use single item array for now, known issue read below)
 Shortcut values for Apache Cordova plugins:
 `'vibration'`
 `'device-orientation'`
@@ -284,11 +277,13 @@ Applicable Commands: `'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'`
 
 Specify the base url for repo if plugin_path: false
 
-
-
-
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+## Known Issues
+There is a bug in cordova cli that doesn't handle running in parallel for plugins issue open [CB-4679](https://issues.apache.org/jira/browse/CB-4679)
+Please do individual add plugin to work around problem for now
+               
+
 ## Release History
-_(Nothing yet)_
+- 0.1.5 Stable release
