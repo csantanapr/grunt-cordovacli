@@ -210,7 +210,7 @@ If you want to use a local path:
 
 #### options.plugin_path
 Type: `String` or `Boolean`
-Default value: `'false'`
+Default value: `false`
 Applicable Commands: `'plugin'`
 
 Specify the path to plugin to add or remove
@@ -224,8 +224,8 @@ Specify the extension for repo if plugin_path: false
 
 #### options.plugin_base_path
 Type: `String`
-Default value: `'.git'`
-Applicable Commands: `'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'`
+Default value: `'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'`
+Applicable Commands: `'plugin'`
 
 Specify the base url for repo if plugin_path: false
 
