@@ -2,7 +2,7 @@
 
 > "Wraps a web application as a hybrid app with [Apache Cordova CLI 3.x](http://cordova.io)"
 
-More information about the new [Apache Cordova 3.x Command-line Interface](http://cordova.apache.org/docs/en/3.0.0/guide_cli_index.md.html#The%20Command-line%20Interface)
+More information about the new [Apache Cordova 3.x Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
 
 ````
 Synopsis
@@ -32,7 +32,7 @@ Project-Level Commands
                                                 directory, with optional port number that defaults to 8000.
                                                 (Note: you must edit the native code to reference the server)
 ````
-                                                
+
 
 
 
@@ -68,92 +68,40 @@ cordovacli: {
     create: {
         options: {
             command: 'create',
-            id: 'com.myHybridApp', 
-            name: 'myHybridApp'    
+            id: 'com.myHybridApp',
+            name: 'myHybridApp'
         }
     },
     add_platform: {
         options: {
             command: 'platform',
-            action: 'add',                  
-            platforms: ['ios', 'android']          
+            action: 'add',
+            platforms: ['ios', 'android']
         }
     },
-    add_plugin_vibration: {
+    add_plugins: {
         options: {
             command: 'plugin',
             action: 'add',
-            plugins: [ 'vibration']
-        }
-    },
-    add_plugin_device_orientation: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'device-orientation']
-        }
-    },
-    add_plugin_network_information: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'network-information']
-        }
-    },
-    add_plugin_device: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'device']
-        }
-    },
-    add_plugin_contacts: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'device']
-        }
-    },
-    add_plugin_media_capture: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'media-capture']
-        }
-    },
-    add_plugin_inappbrowser: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'inappbrowser']
-        }
-    },
-    add_plugin_globalization: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'globalization']
-        }
-    },
-    add_plugin_geolocation: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'geolocation']
-        }
-    },
-    add_plugin_dialogs: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'dialogs']
-        }
-    },
-    add_plugin_file: {
-        options: {
-            command: 'plugin',
-            action: 'add',
-            plugins: [ 'file']
+            plugins: [
+                'battery-status',
+                'camera',
+                'console',
+                'contacts',
+                'device',
+                'device-motion',
+                'device-orientation',
+                'dialogs',
+                'file',
+                'geolocation',
+                'globalization',
+                'inappbrowser',
+                'media',
+                'media-capture',
+                'network-information',
+                'splashscreen',
+                'vibration'
+            ]
         }
     },
     build_ios: {
@@ -202,14 +150,14 @@ Specify the Name for the Cordova App
 
 #### options.path
 Type: `String`
-Default value: `'.cordova'` 
+Default value: `'cApp'`
 
 Specify the path to the Cordova project directory
 
 #### options.action
 Type: `String`
 Valid value: `'add'` `'rm'` `'remove'`
-Required for Commands: `'platform'` 
+Required for Commands: `'platform'`
 
 Specify the action to perform
 
@@ -223,24 +171,28 @@ Optional for other commands
 Specify the platform type
 
 #### options.plugins
-Type: `String` `'Array'` (use single item array for now, known issue read below)
+Type: `String` `'Array'`
 Shortcut values for Apache Cordova plugins:
-`'vibration'`
-`'device-orientation'`
-`'network-information'`
-`'device'`
-`'contacts`'
-`'media-capture'`
-`'inappbrowser'`
-`'globalization'`
-`'geolocation'`
-`'file'`
-`'dialogs'`
-`'camera'`
-`'media'`
-`'device-motion'`
-                
-Use with Commands: `'plugin'` 
+
+    'battery-status'
+    'camera'
+    'console'
+    'contacts'
+    'device'
+    'device-motion'
+    'device-orientation'
+    'dialogs'
+    'file'
+    'geolocation'
+    'globalization'
+    'inappbrowser'
+    'media'
+    'media-capture'
+    'network-information'
+    'splashscreen'
+    'vibration'
+
+Use with Commands: `'plugin'`
 
 Specify the plugin to add to the Cordova project
 The value of plugin will be use with plugin_path_ext and plugin_base_path
@@ -255,7 +207,7 @@ If you want to use a different repo for see options:
 If you want to use a local path:
 
 - options.plugin_path: '~/plugins/myhwplugin'
-            
+
 #### options.plugin_path
 Type: `String` or `Boolean`
 Default value: `'false'`
@@ -280,10 +232,8 @@ Specify the base url for repo if plugin_path: false
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Known Issues
-There is a bug in cordova cli that doesn't handle running in parallel for plugins issue open [CB-4679](https://issues.apache.org/jira/browse/CB-4679)
-Please do individual add plugin to work around problem for now
-               
+
 
 ## Release History
 - 0.1.5 Stable release
+- 0.1.6 Stable release

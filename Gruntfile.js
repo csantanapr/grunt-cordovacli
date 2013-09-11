@@ -47,104 +47,29 @@ module.exports = function (grunt) {
                     platforms: ['ios', 'android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
                 }
             },
-            /* There is a bug in cordova cli that doesn't handle running in parallel for plugins issue open here: https://issues.apache.org/jira/browse/CB-4679
-               Doing individual add plugin to work around problem
-               
-            add_plugin: {
+            add_plugins: {
                 options: {
                     command: 'plugin',
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
                     plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
-                        'vibration',
-                        'device-orientation',
-                        'network-information',
-                        'device',
+                        'battery-status',
+                        'camera',
+                        'console',
                         'contacts',
-                        'media-capture',
-                        'inappbrowser',
-                        'globalization',
-                        'geolocation',
+                        'device',
+                        'device-motion',
+                        'device-orientation',
+                        'dialogs',
                         'file',
-                        'dialogs'
+                        'geolocation',
+                        'globalization',
+                        'inappbrowser',
+                        'media',
+                        'media-capture',
+                        'network-information',
+                        'splashscreen',
+                        'vibration'
                     ]
-                }
-            },
-            */
-            add_plugin_vibration: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'vibration']
-                }
-            },
-            add_plugin_device_orientation: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'device-orientation']
-                }
-            },
-            add_plugin_network_information: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'network-information']
-                }
-            },
-            add_plugin_device: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'device']
-                }
-            },
-            add_plugin_contacts: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'device']
-                }
-            },
-            add_plugin_media_capture: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'media-capture']
-                }
-            },
-            add_plugin_inappbrowser: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'inappbrowser']
-                }
-            },
-            add_plugin_globalization: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'globalization']
-                }
-            },
-            add_plugin_geolocation: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'geolocation']
-                }
-            },
-            add_plugin_dialogs: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'dialogs']
-                }
-            },
-            add_plugin_file: {
-                options: {
-                    command: 'plugin',
-                    action: 'add',
-                    plugins: [ 'file']
                 }
             },
             build: {

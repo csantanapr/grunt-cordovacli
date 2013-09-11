@@ -14,8 +14,11 @@ module.exports = function (grunt) {
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
+    var runCordova,
+        runCordovaParallel,
+        runCordovaSeries;
 
-    var runCordova = function (cmd, args, opts, done) {
+    runCordova = function (cmd, args, opts, done) {
         grunt.log.writeln('Running-> ' + cmd + ' ' + args.join(' '));
         grunt.util.spawn(
             {
@@ -30,26 +33,36 @@ module.exports = function (grunt) {
                     grunt.log.success('Done-> ' + cmd + ' ' + args.join(' '));
                 }
                 done(err, result);
-                
             }
         );
-    },
-        runCordovaParallel = function (tasks, done) {
-            grunt.util.async.parallel(tasks, function (err, result) {
-                if (err) {
-                    grunt.log.writeln('Error-> with Parallel tasks' + err);
-                    done(false);
-                } else {
-                    grunt.log.writeln('Success-> with Parallel tasks');
-                    done();
-                }
-            });
-        };
+    };
+    runCordovaParallel = function (tasks, done) {
+        grunt.util.async.parallel(tasks, function (err, result) {
+            if (err) {
+                grunt.log.writeln('Error-> with Parallel tasks' + err);
+                done(false);
+            } else {
+                grunt.log.writeln('Success-> with Parallel tasks');
+                done();
+            }
+        });
+    };
+    runCordovaSeries = function (tasks, done) {
+        grunt.util.async.series(tasks, function (err, result) {
+            if (err) {
+                grunt.log.writeln('Error-> with Series tasks' + err);
+                done(false);
+            } else {
+                grunt.log.writeln('Success-> with Series tasks');
+                done();
+            }
+        });
+    };
 
     grunt.registerMultiTask('cordovacli', '"Wraps a web application as a hybrid app with Cordova CLI"', function () {
     // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            path: '.cordova',
+            path: 'cApp',
             name: 'Hello',
             id: 'com.hello',
             plugin_path_ext: '.git',
@@ -63,7 +76,7 @@ module.exports = function (grunt) {
             args = [],
             cmd_opts =  {},
             tasks = [];
-        
+
         if (options.command !== "create") {
             grunt.log.writeln('Setting Current Working Directory (CWD) to ' + options.path);
             cmd_opts.cwd = options.path;
@@ -98,7 +111,7 @@ module.exports = function (grunt) {
                 };
                 tasks.push(f);
             });
-            runCordovaParallel(tasks, done);
+            runCordovaSeries(tasks, done);
         } else {
             if (options.platforms) {
                 /*
@@ -120,12 +133,12 @@ module.exports = function (grunt) {
                         } else {
                             runCordova(cordovacli, [options.command, p ], cmd_opts, callback);
                         }
-                        
+
                     };
                     tasks.push(f);
                 });
                 runCordovaParallel(tasks, done);
-                    
+
             } else {
                 args = [options.command];
                 if (options.command === "serve" && options.port) {
