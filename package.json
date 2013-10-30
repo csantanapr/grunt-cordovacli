@@ -1,7 +1,7 @@
 {
   "name": "grunt-cordovacli",
   "description": "Wraps a web application as a hybrid app with Apache Cordova CLI 3.x",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "homepage": "https://github.com/csantanapr/grunt-cordovacli",
   "author": {
     "name": "Carlos Santana",
@@ -31,7 +31,8 @@
     "grunt-contrib-jshint": "~0.6.2",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.1",
+    "cordova": "3.x"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
@@ -40,7 +41,7 @@
     "gruntplugin",
     "grunt",
     "cordova",
-    "cordova cli",
+    "cordova-cli",
     "phonegap"
   ],
   "directories": {
