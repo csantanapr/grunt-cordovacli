@@ -6,7 +6,7 @@
  * Licensed under the Apache-2.0 license.
  */
 /*global module */
-
+var path = require('path');
 
 module.exports = function (grunt) {
     'use strict';
@@ -16,13 +16,19 @@ module.exports = function (grunt) {
 
     var runCordova,
         runCordovaParallel,
-        runCordovaSeries;
+        runCordovaSeries,
+        cordova_json = path.join(__dirname,'../node_modules','cordova','package.json'),
+        cordova_pkg = grunt.file.readJSON(cordova_json);
+        grunt.log.writeln('Using cordova CLI version (' + cordova_pkg.version + ') ');
 
-    runCordova = function (cmd, args, opts, done) {
-        grunt.log.writeln('Running-> ' + cmd + ' ' + args.join(' '));
+    runCordova = function (args, opts, done) {
+        var cordova_cli = path.join(__dirname,'../node_modules','cordova', cordova_pkg.bin.cordova);
+
+
+        grunt.log.writeln('Running: cordova' + args.join(' '));
         grunt.util.spawn(
             {
-                "cmd": cmd,
+                "cmd": cordova_cli,
                 "args": args,
                 "opts": opts
             },
@@ -30,7 +36,7 @@ module.exports = function (grunt) {
                 if (err) {
                     grunt.log.error(err);
                 } else {
-                    grunt.log.success('Done-> ' + cmd + ' ' + args.join(' '));
+                    grunt.log.success('Done-> ' + cordova_cli + ' ' + args.join(' '));
                 }
                 done(err, result);
             }
@@ -71,11 +77,11 @@ module.exports = function (grunt) {
 
         }),
             done = this.async(),
-            cordovacli = 'cordova',
             msg = '',
             args = [],
             cmd_opts =  {},
             tasks = [];
+
 
         if (options.command !== "create") {
             grunt.log.writeln('Setting Current Working Directory (CWD) to ' + options.path);
@@ -85,7 +91,7 @@ module.exports = function (grunt) {
             // compose create command
             // cordova create <PATH> [ID] [NAME]
             args = [options.command, options.path, options.id, options.name];
-            runCordova(cordovacli, args, cmd_opts, done);
+            runCordova(args, cmd_opts, done);
         } else if (options.command === "platform" && options.platforms) {
             //platform(s) [{add|remove|rm} <PLATFORM>]
             tasks = [];
@@ -93,12 +99,13 @@ module.exports = function (grunt) {
             options.platforms.forEach(function (p) {
                 var f;
                 f = function (callback) {
-                    runCordova(cordovacli, [options.command, options.action, p ], cmd_opts, callback);
+                    runCordova([options.command, options.action, p ], cmd_opts, callback);
                 };
                 tasks.push(f);
             });
             runCordovaParallel(tasks, done);
         } else if (options.plugins) {
+            //plugin(s) [{add|remove|rm} <PATH|URI>]
             tasks = [];
             tasks.length = 0;
             options.plugins.forEach(function (p) {
@@ -107,31 +114,22 @@ module.exports = function (grunt) {
                     p = options.plugin_base_path + p + options.plugin_path_ext;
                 }
                 f = function (callback) {
-                    runCordova(cordovacli, [options.command, options.action, p ], cmd_opts, callback);
+                    runCordova([options.command, options.action, p ], cmd_opts, callback);
                 };
                 tasks.push(f);
             });
             runCordovaSeries(tasks, done);
         } else {
             if (options.platforms) {
-                /*
-                options.platforms.forEach(function (p) {
-                    args = [options.command, p ];
-                    if (options.command === "serve" && options.port) {
-                        args.push(options.port);
-                    }
-                    runCordova(cordovacli, args, cmd_opts, done);
-                });
-                */
                 tasks = [];
                 tasks.length = 0;
                 options.platforms.forEach(function (p) {
                     var f;
                     f = function (callback) {
                         if (options.command === "serve" && options.port) {
-                            runCordova(cordovacli, [options.command, p, options.port], cmd_opts, callback);
+                            runCordova([options.command, p, options.port], cmd_opts, callback);
                         } else {
-                            runCordova(cordovacli, [options.command, p ], cmd_opts, callback);
+                            runCordova([options.command, p ], cmd_opts, callback);
                         }
 
                     };
@@ -144,7 +142,7 @@ module.exports = function (grunt) {
                 if (options.command === "serve" && options.port) {
                     args.push(options.port);
                 }
-                runCordova(cordovacli, args, cmd_opts, done);
+                runCordova(args, cmd_opts, done);
             }
 
         }

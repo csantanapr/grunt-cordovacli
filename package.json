@@ -27,12 +27,14 @@
   "scripts": {
     "test": "grunt test"
   },
+  "dependencies": {
+    "cordova": "3.x"
+  },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.2",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.1",
-    "cordova": "3.x"
+    "grunt": "~0.4.1"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
