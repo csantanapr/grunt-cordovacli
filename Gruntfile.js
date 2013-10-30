@@ -40,7 +40,7 @@ module.exports = function (grunt) {
                     name: 'myHybridApp'    //optional
                 }
             },
-            add_platform: {
+            add_platforms: {
                 options: {
                     command: 'platform',
                     action: 'add',                  //valid actions for command platform are add , remove, rm
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
-                    plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
+                    plugins: [                      //plugins are fetched from cordova registry plugins.cordova.io
                         'battery-status',
                         'camera',
                         'console',
@@ -69,6 +69,17 @@ module.exports = function (grunt) {
                         'network-information',
                         'splashscreen',
                         'vibration'
+                    ]
+                }
+            },
+            add_plugins_test: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',                  //valid actions for command plugin are add , remove, rm
+                    plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
+                        'battery-status',
+                        '../test_plugins/org.apache.cordova.camera'
+
                     ]
                 }
             },

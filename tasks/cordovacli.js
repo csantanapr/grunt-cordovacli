@@ -21,11 +21,33 @@ module.exports = function (grunt) {
         cordova_pkg = grunt.file.readJSON(cordova_json);
         grunt.log.writeln('Using cordova CLI version (' + cordova_pkg.version + ') ');
 
+        var cordova_plugins_map = {
+                        'battery-status':      'org.apache.cordova.battery-status',
+                        'camera':              'org.apache.cordova.camera',
+                        'console':             'org.apache.cordova.console',
+                        'contacts':            'org.apache.cordova.contacts',
+                        'device':              'org.apache.cordova.device',
+                        'device-motion':       'org.apache.cordova.device-motion',
+                        'device-orientation':  'org.apache.cordova.device-orientation',
+                        'dialogs':             'org.apache.cordova.dialogs',
+                        'file':                'org.apache.cordova.file',
+                        'geolocation':         'org.apache.cordova.geolocation',
+                        'globalization':       'org.apache.cordova.globalization',
+                        'inappbrowser':        'org.apache.cordova.inappbrowser',
+                        'media':               'org.apache.cordova.media',
+                        'media-capture':       'org.apache.cordova.media-capture',
+                        'network-information': 'org.apache.cordova.network-information',
+                        'splashscreen':        'org.apache.cordova.splashscreen',
+                        'vibration':           'org.apache.cordova.vibration'
+        };
+
+
+
     runCordova = function (args, opts, done) {
         var cordova_cli = path.join(__dirname,'../node_modules','cordova', cordova_pkg.bin.cordova);
 
 
-        grunt.log.writeln('Running: cordova' + args.join(' '));
+        grunt.log.writeln('Running: cordova ' + args.join(' '));
         grunt.util.spawn(
             {
                 "cmd": cordova_cli,
@@ -68,12 +90,9 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('cordovacli', '"Wraps a web application as a hybrid app with Cordova CLI"', function () {
     // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            path: 'cApp',
-            name: 'Hello',
-            id: 'com.hello',
-            plugin_path_ext: '.git',
-            plugin_base_path: 'https://git-wip-us.apache.org/repos/asf/cordova-plugin-',
-            plugin_path: false
+            path: 'HelloCordova',
+            name: 'HelloCordova',
+            id: 'io.cordova.hellocordova'
 
         }),
             done = this.async(),
@@ -110,8 +129,8 @@ module.exports = function (grunt) {
             tasks.length = 0;
             options.plugins.forEach(function (p) {
                 var f;
-                if (options.plugin_path === false) {
-                    p = options.plugin_base_path + p + options.plugin_path_ext;
+                if(cordova_plugins_map[p]){
+                    p = cordova_plugins_map[p];
                 }
                 f = function (callback) {
                     runCordova([options.command, options.action, p ], cmd_opts, callback);

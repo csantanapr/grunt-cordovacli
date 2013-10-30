@@ -18,7 +18,7 @@ Project-Level Commands
 
     platform(s) [{add|remove|rm} <PLATFORM>] . add or remove a specified PLATFORM, OR
                                                 list all installed, available and unavailable platforms
-    plugin(s) [{add|remove|rm} <PATH|URI>] ... add or remove a plugin from the specified PATH or URI, OR
+    plugin(s) [{add|remove|rm} <PATH|URI>|ID] ... add or remove a plugin from the specified PATH or URI, OR
                                                 list all currently installed plugins
     prepare [PLATFORM.] ..................... copies files for specified platforms, or all platforms,
                                                so that the project is ready to build in each SDK.
@@ -72,7 +72,7 @@ cordovacli: {
             name: 'myHybridApp'
         }
     },
-    add_platform: {
+    add_platforms: {
         options: {
             command: 'platform',
             action: 'add',
@@ -130,27 +130,27 @@ cordovacli: {
 
 #### options.command
 Type: `String`
-Valid values: `'create'` `'platform'` `'plugin'` `'build'` `'emulate'` `'prepare'` `'compile'`
+Valid values: `'create'` `'platform'` `'plugin'` `'build'` `'emulate'` `'prepare'` `'compile'` `'run'` `'serve'`
 
 Specify the cordova command
 
 #### options.id
 Type: `String`
-Default value: `'com.hello'`
+Default value: `'io.cordova.hellocordova'`
 Use with Command: `'create'`
 
 Specify the ID (reverse-domain-style package name) for the Cordova App
 
 #### options.name
 Type: `String`
-Default value: `'Hello'`
+Default value: `'HelloCordova'`
 Use with Command: `'create'`
 
 Specify the Name for the Cordova App
 
 #### options.path
 Type: `String`
-Default value: `'cApp'`
+Default value: `'HelloCordova'`
 
 Specify the path to the Cordova project directory
 
@@ -195,39 +195,13 @@ Shortcut values for Apache Cordova plugins:
 Use with Commands: `'plugin'`
 
 Specify the plugin to add to the Cordova project
-The value of plugin will be use with plugin_path_ext and plugin_base_path
+It can be specify in 4 forms:
 
-`'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'plugin-value'.git'`
+* Shortcut         (i.e. 'camera' it will be downloaded form plugins.cordova.io)
+* ID               (i.e. org.apache.cordova.device it will be downloaded from plugins.cordova.io)
+* Git Url          (i.e. https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git)
+* Directory Path   (~/userid/cordova/plugins/plugin1)
 
-If you want to use a different repo for see options:
-
-- options.plugin_path_ext: '.git'
-- options.plugin_base_path: 'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'
-
-If you want to use a local path:
-
-- options.plugin_path: '~/plugins/myhwplugin'
-
-#### options.plugin_path
-Type: `String` or `Boolean`
-Default value: `false`
-Applicable Commands: `'plugin'`
-
-Specify the path to plugin to add or remove
-
-#### options.plugin_path_ext
-Type: `String`
-Default value: `'.git'`
-Applicable Commands: `'plugin'`
-
-Specify the extension for repo if plugin_path: false
-
-#### options.plugin_base_path
-Type: `String`
-Default value: `'https://git-wip-us.apache.org/repos/asf/cordova-plugin-'`
-Applicable Commands: `'plugin'`
-
-Specify the base url for repo if plugin_path: false
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
