@@ -19,7 +19,7 @@ module.exports = function (grunt) {
         runCordovaSeries,
         cordova_json = path.join(__dirname,'../node_modules','cordova','package.json'),
         cordova_pkg = grunt.file.readJSON(cordova_json);
-        grunt.log.writeln('Using cordova CLI version (' + cordova_pkg.version + ') ');
+
 
         var cordova_plugins_map = {
                         'battery-status':      'org.apache.cordova.battery-status',
@@ -101,6 +101,7 @@ module.exports = function (grunt) {
             cmd_opts =  {},
             tasks = [];
 
+        grunt.log.writeln('Using cordova CLI version (' + cordova_pkg.version + ') ');
 
         if (options.command !== "create") {
             grunt.log.writeln('Setting Current Working Directory (CWD) to ' + options.path);
