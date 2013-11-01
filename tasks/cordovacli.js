@@ -58,7 +58,7 @@ module.exports = function (grunt) {
                 if (err) {
                     grunt.log.error(err);
                 } else {
-                    grunt.log.success('Done-> ' + cordova_cli + ' ' + args.join(' '));
+                    grunt.log.success('Done-> cordova ' + args.join(' '));
                 }
                 done(err, result);
             }
