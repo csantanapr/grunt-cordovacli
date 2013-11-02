@@ -119,7 +119,8 @@ cordovacli: {
     emulate_android: {
         options: {
             command: 'emulate',
-            platforms: ['android']
+            platforms: ['android'],
+            args: ['--target','Nexus5']
         }
     }
 }

@@ -18,31 +18,27 @@ module.exports = function (grunt) {
         runCordovaParallel,
         runCordovaSeries,
         cordova_json = path.join(__dirname,'../node_modules','cordova','package.json'),
-        cordova_pkg = grunt.file.readJSON(cordova_json);
-
-
-        var cordova_plugins_map = {
-                        'battery-status':      'org.apache.cordova.battery-status',
-                        'camera':              'org.apache.cordova.camera',
-                        'console':             'org.apache.cordova.console',
-                        'contacts':            'org.apache.cordova.contacts',
-                        'device':              'org.apache.cordova.device',
-                        'device-motion':       'org.apache.cordova.device-motion',
-                        'device-orientation':  'org.apache.cordova.device-orientation',
-                        'dialogs':             'org.apache.cordova.dialogs',
-                        'file':                'org.apache.cordova.file',
-                        'geolocation':         'org.apache.cordova.geolocation',
-                        'globalization':       'org.apache.cordova.globalization',
-                        'inappbrowser':        'org.apache.cordova.inappbrowser',
-                        'media':               'org.apache.cordova.media',
-                        'media-capture':       'org.apache.cordova.media-capture',
-                        'network-information': 'org.apache.cordova.network-information',
-                        'splashscreen':        'org.apache.cordova.splashscreen',
-                        'vibration':           'org.apache.cordova.vibration'
+        cordova_pkg = grunt.file.readJSON(cordova_json),
+        cordova_plugins_map = {
+            'battery-status':      'org.apache.cordova.battery-status',
+            'camera':              'org.apache.cordova.camera',
+            'console':             'org.apache.cordova.console',
+            'contacts':            'org.apache.cordova.contacts',
+            'device':              'org.apache.cordova.device',
+            'device-motion':       'org.apache.cordova.device-motion',
+            'device-orientation':  'org.apache.cordova.device-orientation',
+            'dialogs':             'org.apache.cordova.dialogs',
+            'file':                'org.apache.cordova.file',
+            'file-transfer':       'org.apache.cordova.file-transfer',
+            'geolocation':         'org.apache.cordova.geolocation',
+            'globalization':       'org.apache.cordova.globalization',
+            'inappbrowser':        'org.apache.cordova.inappbrowser',
+            'media':               'org.apache.cordova.media',
+            'media-capture':       'org.apache.cordova.media-capture',
+            'network-information': 'org.apache.cordova.network-information',
+            'splashscreen':        'org.apache.cordova.splashscreen',
+            'vibration':           'org.apache.cordova.vibration'
         };
-
-
-
     runCordova = function (args, opts, done) {
         var cordova_cli = path.join(__dirname,'../node_modules','cordova', cordova_pkg.bin.cordova);
 
@@ -92,7 +88,8 @@ module.exports = function (grunt) {
         var options = this.options({
             path: 'HelloCordova',
             name: 'HelloCordova',
-            id: 'io.cordova.hellocordova'
+            id: 'io.cordova.hellocordova',
+            args: []
 
         }),
             done = this.async(),
@@ -119,7 +116,7 @@ module.exports = function (grunt) {
             options.platforms.forEach(function (p) {
                 var f;
                 f = function (callback) {
-                    runCordova([options.command, options.action, p ], cmd_opts, callback);
+                    runCordova([options.command, options.action, p ].concat(options.args), cmd_opts, callback);
                 };
                 tasks.push(f);
             });
@@ -134,7 +131,7 @@ module.exports = function (grunt) {
                     p = cordova_plugins_map[p];
                 }
                 f = function (callback) {
-                    runCordova([options.command, options.action, p ], cmd_opts, callback);
+                    runCordova([options.command, options.action, p ].concat(options.args), cmd_opts, callback);
                 };
                 tasks.push(f);
             });
@@ -147,9 +144,9 @@ module.exports = function (grunt) {
                     var f;
                     f = function (callback) {
                         if (options.command === "serve" && options.port) {
-                            runCordova([options.command, p, options.port], cmd_opts, callback);
+                            runCordova([options.command, p, options.port].concat(options.args), cmd_opts, callback);
                         } else {
-                            runCordova([options.command, p ], cmd_opts, callback);
+                            runCordova([options.command, p ].concat(options.args), cmd_opts, callback);
                         }
 
                     };
@@ -162,7 +159,7 @@ module.exports = function (grunt) {
                 if (options.command === "serve" && options.port) {
                     args.push(options.port);
                 }
-                runCordova(args, cmd_opts, done);
+                runCordova(args.concat(options.args), cmd_opts, done);
             }
 
         }

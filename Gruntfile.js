@@ -61,6 +61,7 @@ module.exports = function (grunt) {
                         'device-orientation',
                         'dialogs',
                         'file',
+                        'file-transfer',
                         'geolocation',
                         'globalization',
                         'inappbrowser',
