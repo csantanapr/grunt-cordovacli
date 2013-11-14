@@ -6,7 +6,8 @@
  * Licensed under the Apache-2.0 license.
  */
 /*global module */
-var path = require('path');
+var path = require('path'),
+    os   = require('os');
 
 module.exports = function (grunt) {
     'use strict';
@@ -40,16 +41,22 @@ module.exports = function (grunt) {
             'vibration':           'org.apache.cordova.vibration'
         };
     runCordova = function (args, opts, done) {
-        var cordova_cli = path.join(__dirname,'../node_modules','cordova', cordova_pkg.bin.cordova);
+        var cordova_cli, spawn_cmd;
 
-
-        grunt.log.writeln('Running: cordova ' + args.join(' '));
-        grunt.util.spawn(
-            {
+        cordova_cli = path.join(__dirname,'../node_modules','cordova', cordova_pkg.bin.cordova),
+        spawn_cmd = {
                 "cmd": cordova_cli,
                 "args": args,
                 "opts": opts
-            },
+        };
+
+        if (os.platform() === 'win32') {
+            spawn_cmd.cmd = 'node';
+            spawn_cmd.args = [cordova_cli].concat(args);
+        }
+
+        grunt.log.writeln('Running:' + spawn_cmd.cmd + ' ' + spawn_cmd.args.join(' '));
+        grunt.util.spawn(spawn_cmd,
             function (err, result) {
                 if (err) {
                     grunt.log.error(err);
