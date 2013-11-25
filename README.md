@@ -4,37 +4,6 @@
 
 More information about the new [Apache Cordova 3.x Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
 
-````
-Synopsis
-
-    cordova command [options]
-
-Global Commands
-
-    create <PATH> [ID] [NAME] ............... creates a cordova project in the specified PATH, with
-                                               optional NAME and ID (reverse-domain-style package name)
-
-Project-Level Commands
-
-    platform(s) [{add|remove|rm} <PLATFORM>] . add or remove a specified PLATFORM, OR
-                                                list all installed, available and unavailable platforms
-    plugin(s) [{add|remove|rm} <PATH|URI>|ID] ... add or remove a plugin from the specified PATH or URI, OR
-                                                list all currently installed plugins
-    prepare [PLATFORM.] ..................... copies files for specified platforms, or all platforms,
-                                               so that the project is ready to build in each SDK.
-    compile [PLATFORM.] ..................... builds the app for specified platforms, or all platforms
-    build [PLATFORM..] ...................... shortcut for prepare, then compile
-    emulate [PLATFORM..] .................... deploys app in specified (or all) platforms' emulator,
-                                                opening emulator if necessary
-    run [PLATFORM..] ........................ deploys app on specified (or all) platform devices, which
-                                                must be properly connected and configured in each SDK
-    serve <PLATFORM> [PORT] .................. runs a local web server for the specified platform's www/
-                                                directory, with optional port number that defaults to 8000.
-                                                (Note: you must edit the native code to reference the server)
-````
-
-
-
 
 ## Getting Started
 This plugin requires Grunt `~0.4.1`
@@ -64,6 +33,16 @@ In your project's Gruntfile, add a section named `cordovacli` to the data object
 cordovacli: {
     options: {
         path: 'myHybridAppFolder'
+    },
+    cordova: {
+        options: {
+            command: ['create','platform','plugin','build'],
+            platforms: ['ios','android'],
+            plugins: ['device','dialogs'],
+            path: 'myHybridAppFolder',
+            id: 'io.cordova.hellocordova',
+            name: 'HelloCordova'
+        }
     },
     create: {
         options: {
@@ -130,10 +109,13 @@ cordovacli: {
 ### Options
 
 #### options.command
-Type: `String`
-Valid values: `'create'` `'platform'` `'plugin'` `'build'` `'emulate'` `'prepare'` `'compile'` `'run'` `'serve'`
+Type: `String` or `Array`
+Valid values for String: `'create'` `'platform'` `'plugin'` `'build'` `'emulate'` `'prepare'` `'compile'` `'run'` `'serve'`
+Specify the cordova command when using `String`
 
-Specify the cordova command
+
+Valid values for Array: `'create'` `'platform'` `'plugin'` `'prepare'` `'compile'` `'build'`
+Specify a full cycle or series of cordova commands when is an `Array`
 
 #### options.id
 Type: `String`

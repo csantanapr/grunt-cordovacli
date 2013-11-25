@@ -18,6 +18,10 @@ module.exports = function (grunt) {
     var runCordova,
         runCordovaParallel,
         runCordovaSeries,
+        runFullCycle,
+        runCreate,
+        runPlatform,
+        runPlugin,
         cordova_json = path.join(__dirname,'../node_modules','cordova','package.json'),
         cordova_pkg = grunt.file.readJSON(cordova_json),
         cordova_plugins_map = {
@@ -90,6 +94,60 @@ module.exports = function (grunt) {
         });
     };
 
+    runCreate = function (options, done) {
+        // cordova create <PATH> [ID] [NAME]
+        var args = ['create', options.path, options.id, options.name];
+        runCordova(args, {}, done);
+    };
+    runPlatform = function (options, done) {
+        //platform(s) [{add|remove|rm} <PLATFORM>]
+            var tasks = [];
+            tasks.length = 0;
+            options.platforms.forEach(function (p) {
+                var f;
+                f = function (callback) {
+                    runCordova(['platform', options.action, p ].concat(options.args), {cwd:options.path}, callback);
+                };
+                tasks.push(f);
+            });
+            runCordovaParallel(tasks, done);
+    };
+
+    runPlugin = function (options, done) {
+        //plugin(s) [{add|remove|rm} <PATH|URI>]
+            var tasks = [];
+            tasks.length = 0;
+            options.plugins.forEach(function (p) {
+                var f;
+                if(cordova_plugins_map[p]){
+                    p = cordova_plugins_map[p];
+                }
+                f = function (callback) {
+                    runCordova(['plugin', options.action, p ].concat(options.args), {cwd:options.path}, callback);
+                };
+                tasks.push(f);
+            });
+            runCordovaSeries(tasks, done);
+    };
+
+    runFullCycle = function (commands, options, done){
+        var tasks = [];
+        commands.forEach(function(command){
+            if(command === 'create'){
+                tasks.push(function (cb){runCreate(options,cb);});
+            } else if (command === 'platform'){
+                options.action = 'add';
+                tasks.push(function (cb){runPlatform(options,cb);});
+            } else if (command === 'plugin'){
+                options.action = 'add';
+                tasks.push(function (cb){runPlugin(options,cb);});
+            } else if (command === 'prepare' || command === 'compile' || command === 'build'){
+                tasks.push(function (cb){runCordova([command].concat(options.args), {cwd:options.path}, cb);});
+            }
+        });
+        runCordovaSeries(tasks,done);
+    };
+
     grunt.registerMultiTask('cordovacli', '"Wraps a web application as a hybrid app with Cordova CLI"', function () {
     // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
@@ -103,46 +161,25 @@ module.exports = function (grunt) {
             msg = '',
             args = [],
             cmd_opts =  {},
-            tasks = [];
+            tasks = [],
+            i;
 
         grunt.log.writeln('Using cordova CLI version (' + cordova_pkg.version + ') ');
 
+        if (grunt.util.kindOf(options.command) === 'array'){
+            // full cordova lifecycle
+            return runFullCycle(options.command,options, done);
+        }
         if (options.command !== "create") {
             grunt.log.writeln('Setting Current Working Directory (CWD) to ' + options.path);
             cmd_opts.cwd = options.path;
         }
         if (options.command === "create") {
-            // compose create command
-            // cordova create <PATH> [ID] [NAME]
-            args = [options.command, options.path, options.id, options.name];
-            runCordova(args, cmd_opts, done);
-        } else if (options.command === "platform" && options.platforms) {
-            //platform(s) [{add|remove|rm} <PLATFORM>]
-            tasks = [];
-            tasks.length = 0;
-            options.platforms.forEach(function (p) {
-                var f;
-                f = function (callback) {
-                    runCordova([options.command, options.action, p ].concat(options.args), cmd_opts, callback);
-                };
-                tasks.push(f);
-            });
-            runCordovaParallel(tasks, done);
+            return runCreate(options,done);
+        } else if (options.command === "platform") {
+            return runPlatform(options, done);
         } else if (options.plugins) {
-            //plugin(s) [{add|remove|rm} <PATH|URI>]
-            tasks = [];
-            tasks.length = 0;
-            options.plugins.forEach(function (p) {
-                var f;
-                if(cordova_plugins_map[p]){
-                    p = cordova_plugins_map[p];
-                }
-                f = function (callback) {
-                    runCordova([options.command, options.action, p ].concat(options.args), cmd_opts, callback);
-                };
-                tasks.push(f);
-            });
-            runCordovaSeries(tasks, done);
+            return runPlugin(options, done);
         } else {
             if (options.platforms) {
                 tasks = [];

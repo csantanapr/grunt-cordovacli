@@ -27,11 +27,21 @@ module.exports = function (grunt) {
         },
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp', '.cordova', 'myHybridAppFolder']
+            tests: ['myHybridAppFolder','cordova']
         },
         cordovacli: {
             options: {
                 path: 'myHybridAppFolder'
+            },
+            cordova: {
+                options: {
+                    command: ['create','platform','plugin','build'],
+                    platforms: ['ios','android'],
+                    plugins: ['device','dialogs'],
+                    path: 'cordova',
+                    id: 'io.cordova.hellocordova',
+                    name: 'HelloCordova'
+                }
             },
             create: {
                 options: {
