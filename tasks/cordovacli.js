@@ -183,7 +183,7 @@ module.exports = function (grunt) {
             return runCreate(options,done);
         } else if (options.command === "platform") {
             return runPlatform(options, done);
-        } else if (options.plugins) {
+        } else if (options.command === "plugin") {
             return runPlugin(options, done);
         } else {
             if (options.platforms) {
