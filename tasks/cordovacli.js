@@ -117,6 +117,11 @@ module.exports = function (grunt) {
         //plugin(s) [{add|remove|rm} <PATH|URI>]
             var tasks = [];
             tasks.length = 0;
+
+            if(grunt.util.kindOf(options.plugins) !== 'array'){
+                options.plugins = [options.plugins];
+            }
+
             options.plugins.forEach(function (p) {
                 var f;
                 if(cordova_plugins_map[p]){
@@ -138,7 +143,7 @@ module.exports = function (grunt) {
             } else if (command === 'platform'){
                 options.action = 'add';
                 tasks.push(function (cb){runPlatform(options,cb);});
-            } else if (command === 'plugin'){
+            } else if (command === 'plugin' && options.plugins){
                 options.action = 'add';
                 tasks.push(function (cb){runPlugin(options,cb);});
             } else if (command === 'prepare' || command === 'compile' || command === 'build'){
