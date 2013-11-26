@@ -1,4 +1,4 @@
-# grunt-cordovacli
+# grunt-cordovacli [![Build Status](https://secure.travis-ci.org/csantanapr/grunt-cordovacli.png?branch=master)](https://travis-ci.org/csantanapr/grunt-cordovacli)
 
 > "Wraps a web application as a hybrid app with [Apache Cordova CLI 3.x](http://cordova.io)"
 
