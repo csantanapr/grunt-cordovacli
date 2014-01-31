@@ -1,26 +1,25 @@
-
 /*global require, exports */
 var grunt = require('grunt');
 
 /*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
+ ======== A Handy Little Nodeunit Reference ========
+ https://github.com/caolan/nodeunit
 
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
+ Test methods:
+ test.expect(numAssertions)
+ test.done()
+ Test assertions:
+ test.ok(value, [message])
+ test.equal(actual, expected, [message])
+ test.notEqual(actual, expected, [message])
+ test.deepEqual(actual, expected, [message])
+ test.notDeepEqual(actual, expected, [message])
+ test.strictEqual(actual, expected, [message])
+ test.notStrictEqual(actual, expected, [message])
+ test.throws(block, [error], [message])
+ test.doesNotThrow(block, [error], [message])
+ test.ifError(value)
+ */
 
 exports.cordovacli = {
     setUp: function (done) {
@@ -30,11 +29,26 @@ exports.cordovacli = {
     },
     cordova_test: function (test) {
         'use strict';
-        test.expect(1);
+        test.expect(5);
 
-        var actual = grunt.file.exists("myHybridAppFolder/.cordova/config.json"),
-            expected = true;
-        test.equal(actual, expected, 'should create a cordova project with a .cordova/config.json');
+        var expected = true;
+        var actual;
+
+        actual = grunt.file.isDir("myHybridAppFolder");
+        test.equal(actual, expected, 'should create a cordova project root folder');
+
+        actual = grunt.file.isDir("myHybridAppFolder/merges");
+        test.equal(actual, expected, 'should create a cordova project folder structure');
+
+        actual = grunt.file.isDir("myHybridAppFolder/platforms");
+        test.equal(actual, expected, 'should create a cordova project folder structure');
+
+        actual = grunt.file.isDir("myHybridAppFolder/plugins");
+        test.equal(actual, expected, 'should create a cordova project folder structure');
+
+        actual = grunt.file.isDir("myHybridAppFolder/www");
+        test.equal(actual, expected, 'should create a cordova project folder structure');
+
         test.done();
     }
 };
