@@ -22,7 +22,8 @@ module.exports = function (grunt) {
         runCreate,
         runPlatform,
         runPlugin,
-        cordova_json = path.join(__dirname,'../node_modules','cordova','package.json'),
+        cordova_path = path.dirname(require.resolve('cordova')),
+        cordova_json = path.join(cordova_path,'package.json'),
         cordova_pkg = grunt.file.readJSON(cordova_json),
         cordova_plugins_map = {
             'battery-status':      'org.apache.cordova.battery-status',
@@ -47,7 +48,7 @@ module.exports = function (grunt) {
     runCordova = function (args, opts, done) {
         var cordova_cli, spawn_cmd;
 
-        cordova_cli = path.join(__dirname,'../node_modules','cordova', cordova_pkg.bin.cordova),
+        cordova_cli = path.join(cordova_path, cordova_pkg.bin.cordova),
         spawn_cmd = {
                 "cmd": cordova_cli,
                 "args": args,
@@ -217,4 +218,3 @@ module.exports = function (grunt) {
     });
 
 };
-
