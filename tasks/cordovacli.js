@@ -22,7 +22,8 @@ module.exports = function (grunt) {
         runCreate,
         runPlatform,
         runPlugin,
-        cordova_json = path.join(__dirname,'../node_modules','cordova','package.json'),
+        cordova_path = path.dirname(require.resolve('cordova')),
+        cordova_json = path.join(cordova_path,'package.json'),
         cordova_pkg = grunt.file.readJSON(cordova_json),
         cordova_plugins_map = {
             'battery-status':      'org.apache.cordova.battery-status',
@@ -47,7 +48,8 @@ module.exports = function (grunt) {
     runCordova = function (args, opts, done) {
         var cordova_cli, spawn_cmd;
 
-        cordova_cli = path.join(__dirname,'../node_modules','cordova', cordova_pkg.bin.cordova),
+        cordova_cli = path.join(cordova_path, cordova_pkg.bin.cordova);
+        opts.stdio = 'inherit';
         spawn_cmd = {
                 "cmd": cordova_cli,
                 "args": args,
@@ -60,7 +62,7 @@ module.exports = function (grunt) {
         }
 
         grunt.log.writeln('Running:' + spawn_cmd.cmd + ' ' + spawn_cmd.args.join(' '));
-        grunt.util.spawn(spawn_cmd,
+        var child = grunt.util.spawn(spawn_cmd,
             function (err, result) {
                 if (err) {
                     grunt.log.error(err);
@@ -210,11 +212,6 @@ module.exports = function (grunt) {
                 }
                 runCordova(args.concat(options.args), cmd_opts, done);
             }
-
         }
-
-
     });
-
 };
-
