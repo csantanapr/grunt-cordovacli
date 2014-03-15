@@ -96,7 +96,7 @@ module.exports = function (grunt) {
 
     runCreate = function (options, done) {
         // cordova create <PATH> [ID] [NAME]
-        var args = ['create', options.path, options.id, options.name];
+        var args = ['create', options.path, options.id, options.name].concat(options.args);
         runCordova(args, {}, done);
     };
     runPlatform = function (options, done) {
