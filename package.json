@@ -28,14 +28,14 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "cordova": ">= 3.3"
+    "cordova": ">= 3.4"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-nodeunit": "~0.2.2",
     "grunt": "~0.4.2",
-    "grunt-cli": "~0.1.11"
+    "grunt-cli": "~0.1.11",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-nodeunit": "^0.4.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
