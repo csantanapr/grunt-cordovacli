@@ -29,16 +29,13 @@ exports.cordovacli = {
     },
     cordova_test: function (test) {
         'use strict';
-        test.expect(5);
+        test.expect(4);
 
         var expected = true;
         var actual;
 
         actual = grunt.file.isDir("myHybridAppFolder");
         test.equal(actual, expected, 'should create a cordova project root folder');
-
-        actual = grunt.file.isDir("myHybridAppFolder/merges");
-        test.equal(actual, expected, 'should create a cordova project folder structure');
 
         actual = grunt.file.isDir("myHybridAppFolder/platforms");
         test.equal(actual, expected, 'should create a cordova project folder structure');
