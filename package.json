@@ -31,14 +31,14 @@
     "cordova": ">= 3.4"
   },
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-cli": "~0.1.11",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.5.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-nodeunit": "^0.4.0"
   },
   "peerDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "^0.4.5"
   },
   "keywords": [
     "gruntplugin",
