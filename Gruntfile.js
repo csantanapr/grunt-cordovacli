@@ -67,6 +67,20 @@ module.exports = function (grunt) {
                     platforms: ['ios', 'android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
                 }
             },
+            add_platforms_ios: {
+                options: {
+                    command: 'platform',
+                    action: 'add',                  //valid actions for command platform are add , remove, rm
+                    platforms: ['ios']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
+                }
+            },
+            add_platforms_ios_folder: {
+                options: {
+                    command: 'platform',
+                    action: 'add',                  //valid actions for command platform are add , remove, rm
+                    platforms: ['../node_modules/cordova-ios']          //valid platforms for command platform are ios, android, blackberry10, wp8, or folder
+                }
+            },
             add_plugins: {
                 options: {
                     command: 'plugin',
@@ -101,6 +115,15 @@ module.exports = function (grunt) {
                         'battery-status',
                         '../test_plugins/org.apache.cordova.camera'
 
+                    ]
+                }
+            },
+            add_plugins_id: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',                  //valid actions for command plugin are add , remove, rm
+                    plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
+                        'battery-status'
                     ]
                 }
             },
