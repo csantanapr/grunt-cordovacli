@@ -22,22 +22,22 @@
   ],
   "main": "Gruntfile.js",
   "engines": {
-    "node": ">= 0.10.32"
+    "node": "^0.10.33"
   },
   "scripts": {
     "test": "grunt test"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "cordova": ">=3",
+    "cordova": "^4.2.0",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-jshint": "^0.10.0",
-    "grunt-contrib-nodeunit": "^0.4.0"
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-nodeunit": "^0.4.1"
   },
   "peerDependencies": {
     "grunt": "^0.4.5",
-    "cordova": ">=3"
+    "cordova": "^4.2.0"
   },
   "keywords": [
     "gruntplugin",
