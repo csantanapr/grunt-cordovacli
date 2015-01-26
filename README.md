@@ -148,7 +148,7 @@ Specify the action to perform
 Type: `String` `'Array'`
 Valid value: `'ios'` `'android'` `'blackberry10'`  `'wp8'` `'ubuntu'` `'firefoxos'` `'amazon-fireos'`
 Version can be specified like  `'ios@3.7.0'`
-Can also pass a director containing the platform git repository
+Can also pass a directory containing the platform git repository
 Required for Commands: `'platform'`
 Not Applicable for Commands: `'plugin'`
 Optional for other commands
