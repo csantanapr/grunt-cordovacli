@@ -26,9 +26,11 @@ module.exports = function (grunt) {
         runPlugin,
         isPlatformExists,
         isPluginExists,
-        cordova_path = path.dirname(require.resolve('cordova')),
-        cordova_json = path.join(cordova_path,'package.json'),
-        cordova_pkg = grunt.file.readJSON(cordova_json),
+        cordova_path,
+        cordova_json,
+        cordova_pkg,
+        cordova_bin,
+        cordova_cli,
         cordova_plugins_map = {
             'battery-status':      'org.apache.cordova.battery-status',
             'camera':              'org.apache.cordova.camera',
@@ -63,7 +65,7 @@ module.exports = function (grunt) {
     runCordova = function (args, opts, done) {
         var cordova_cli, spawn_cmd;
 
-        cordova_cli = path.join(cordova_path, cordova_pkg.bin.cordova);
+        cordova_cli = path.join(cordova_path, cordova_bin);
         opts.stdio = 'inherit';
         spawn_cmd = {
                 "cmd": cordova_cli,
@@ -167,7 +169,12 @@ module.exports = function (grunt) {
                     tasks.push(f);
                 } 
             });
-            runCordovaParallel(tasks, done);
+            if ( cordova_cli === 'cca'){
+                runCordovaSeries(tasks, done);
+            } else {
+                runCordovaParallel(tasks, done);
+            }
+            
     };
 
     isPluginExists = function(p, cordovaRootPath) {
@@ -239,20 +246,33 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('cordovacli', '"Wraps a web application as a hybrid app with Cordova CLI"', function () {
     // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options({
-            path: 'HelloCordova',
-            name: 'HelloCordova',
-            id: 'io.cordova.hellocordova',
-            args: []
-
-        }),
+                path: 'HelloCordova',
+                name: 'HelloCordova',
+                id: 'io.cordova.hellocordova',
+                cli: 'cordova',
+                args: []
+            }),
             done = this.async(),
             msg = '',
             args = [],
             cmd_opts =  {},
             tasks = [],
-            i;
+            i,
+            cordova_relative_path;
+            cordova_cli = options.cli
 
-        grunt.log.writeln('Using cordova CLI version (' + cordova_pkg.version + ') ');
+            if ( cordova_cli === 'cca'){
+                cordova_relative_path = '..';
+            } else {
+                cordova_relative_path = '';
+            }
+
+        cordova_path = path.join(path.dirname(require.resolve(options.cli)),cordova_relative_path);
+        cordova_json = path.join(cordova_path,'package.json');
+        cordova_pkg = grunt.file.readJSON(cordova_json);
+        cordova_bin = cordova_pkg.bin[Object.keys(cordova_pkg.bin)[0]];
+
+        grunt.log.writeln('Using '+cordova_cli+' CLI version (' + cordova_pkg.version + ') ');
 
         if (grunt.util.kindOf(options.command) === 'array'){
             // full cordova lifecycle

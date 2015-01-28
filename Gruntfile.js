@@ -31,7 +31,8 @@ module.exports = function (grunt) {
         },
         cordovacli: {
             options: {
-                path: 'myHybridAppFolder'
+                path: 'myHybridAppFolder',
+                cli: 'cordova'
             },
             cordova: {
                 options: {
@@ -65,6 +66,13 @@ module.exports = function (grunt) {
                     command: 'platform',
                     action: 'add',                  //valid actions for command platform are add , remove, rm
                     platforms: ['ios', 'android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
+                }
+            },
+            add_platforms_android: {
+                options: {
+                    command: 'platform',
+                    action: 'add',                  //valid actions for command platform are add , remove, rm
+                    platforms: ['android']          //valid platforms for command platform are ios, android, blackberry10, wp8, wp7
                 }
             },
             add_platforms_ios: {

@@ -1,13 +1,13 @@
 # grunt-cordovacli [![Build Status](https://secure.travis-ci.org/csantanapr/grunt-cordovacli.png?branch=master)](https://travis-ci.org/csantanapr/grunt-cordovacli)
 
-> "Wraps a web application as a hybrid app with [Apache Cordova CLI](http://cordova.io)"
+> "Wraps a web application as a hybrid app with [Apache Cordova CLI](http://cordova.io) or [Crome Cordova Apps CLI](https://github.com/MobileChromeApps/mobile-chrome-apps)"
 
-More information about the new [Apache Cordova Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
-
+More information about [Apache Cordova Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
+More information about [Chrome Apps for Mobile](https://github.com/MobileChromeApps/mobile-chrome-apps)
 
 ## Getting Started
 This plugin requires Grunt `^0.4.5`
-NPM module cordova-cli needs to be install locally or globally
+NPM module `cordova-cli` or `cca` needs to be install locally or globally
 
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
@@ -34,6 +34,7 @@ In your project's Gruntfile, add a section named `cordovacli` to the data object
 cordovacli: {
     options: {
         path: 'myHybridAppFolder'
+        cli: 'cca'
     },
     cordova: {
         options: {
@@ -108,6 +109,13 @@ cordovacli: {
 
 
 ### Options
+
+#### options.cli
+Type: `String`
+Default value: `'cordova'`
+Valid values for String: `'cordova'` `'cca'`
+Specify the cli to use
+
 
 #### options.command
 Type: `String` or `Array`
