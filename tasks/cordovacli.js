@@ -6,9 +6,10 @@
  * Licensed under the Apache-2.0 license.
  */
 /*global module */
-var path = require('path'),
-    os   = require('os'),
-    fs   = require('fs');
+var path        = require('path'),
+    os          = require('os'),
+    fs          = require('fs'),
+    xmlParser   = require('xml-parser');
 
 
 module.exports = function (grunt) {
@@ -180,9 +181,29 @@ module.exports = function (grunt) {
     isPluginExists = function(p, cordovaRootPath) {
         var plugin_cdv_dir;
         var plugin_id;
-
-        // valid platform is like org.apache.cordova.console or org.apache.cordova.console@0.1.0
-        plugin_id = p.split('@')[0];
+        
+        if(fs.existsSync(p)){
+            var pluginXml = path.join(p,'plugin.xml');
+            if(fs.existsSync(pluginXml)){
+                try {
+                    plugin_id = xmlParser(fs.readFileSync(pluginXml).toString()).root.attributes.id;
+                }
+                catch(e){
+                    throw 'Unable to parse plugin.xml to determine plugin ID: ' + e;
+                }
+            }
+            else {
+                throw 'Plugin ' + p + ' exists on file system, but no plugin.xml file could be found.';
+            }
+        }
+        else if(p.indexOf('/') != -1){
+            //more than likely a git url.
+            return false;
+        }
+        else {
+            //valid plugin is like org.apache.cordova.console or org.apache.cordova.console@0.1.0
+            plugin_id = p.split('@')[0];
+        }
         //let check if plugin already added
         plugin_cdv_dir = path.resolve(cordovaRootPath, 'plugins', plugin_id);
         if (fs.existsSync(plugin_cdv_dir)) {
