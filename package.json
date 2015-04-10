@@ -39,8 +39,8 @@
   },
   "peerDependencies": {
     "grunt": "^0.4.5",
-    "cordova": ">=4.3.0",
-    "cca": ">=0.6.0"
+    "cordova": ">=3.0.0",
+    "cca": ">=0.5.1"
   },
   "keywords": [
     "gruntplugin",
