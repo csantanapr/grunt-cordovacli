@@ -85,6 +85,15 @@ cordovacli: {
             ]
         }
     },
+    remove_plugin: {
+        options: {
+            command: 'plugin',
+            action: 'rm',
+            plugins: [
+                'battery-status'
+            ]
+        }
+    },
     build_ios: {
         options: {
             command: 'build',
@@ -197,10 +206,10 @@ It can be specify in 4 forms:
 * Git Url          (i.e. https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git)
 * Directory Path   (~/userid/cordova/plugins/plugin1)
 
-If using with option.action=add and using ID or ID@version, and plugin is already present, then the add action it's skip
+If using with option.action=add and using ID or ID@version, and plugin is already present, cordova will skip it
+If using remove or rm options.command to remove a plugin only Shortcut  or ID are supported
 
 ## Contributing
 Biggest contribution you can do is to open issues.
 You will need to have signed off on the [Apache CLA](http://www.apache.org/licenses/icla.txt) in order for changes to be accepted. For more information, refer to: http://www.apache.org/licenses/#clas
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-

@@ -121,7 +121,8 @@ module.exports = function (grunt) {
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
                     plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
                         'battery-status',
-                        '../test_plugins/org.apache.cordova.camera'
+                        'node_modules/cordova-plugin-camera',
+                        'org.apache.cordova.camera'
 
                     ]
                 }
@@ -131,6 +132,15 @@ module.exports = function (grunt) {
                     command: 'plugin',
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
                     plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
+                        'battery-status'
+                    ]
+                }
+            },
+            remove_plugin_id: {
+                options: {
+                    command: 'plugin',
+                    action: 'rm',                  //valid actions for command plugin are add , remove, rm
+                    plugins: [                      //plugins are remove only by shortcut or id example 'battery-status' or com.apache.cordova.baterry-status
                         'battery-status'
                     ]
                 }
