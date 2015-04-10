@@ -32,7 +32,7 @@ module.exports = function (grunt) {
         cordovacli: {
             options: {
                 path: 'myHybridAppFolder',
-                cli: 'cordova'
+                cli: 'cordova'    //cordova or cca
             },
             cordova: {
                 options: {
