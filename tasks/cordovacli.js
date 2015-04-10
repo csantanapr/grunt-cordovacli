@@ -25,7 +25,6 @@ module.exports = function (grunt) {
         runPlatform,
         runPlugin,
         isPlatformExists,
-        isPluginExists,
         cordova_path,
         cordova_json,
         cordova_pkg,
@@ -159,7 +158,7 @@ module.exports = function (grunt) {
                     platform_name = isPlatformExists(p,options.path);
                     if(platform_name){
                         skip = true;
-                        grunt.log.writeln('Platform '+platform_name+' already exists skipping add'); 
+                        grunt.log.writeln('Platform '+platform_name+' already exists skipping add');
                     }
                 }
                 if(!skip){
@@ -167,30 +166,16 @@ module.exports = function (grunt) {
                         runCordova(['platform', options.action, p ].concat(options.args), {cwd:options.path}, callback);
                     };
                     tasks.push(f);
-                } 
+                }
             });
             if ( cordova_cli === 'cca'){
                 runCordovaSeries(tasks, done);
             } else {
                 runCordovaParallel(tasks, done);
             }
-            
+
     };
 
-    isPluginExists = function(p, cordovaRootPath) {
-        var plugin_cdv_dir;
-        var plugin_id;
-
-        // valid platform is like org.apache.cordova.console or org.apache.cordova.console@0.1.0
-        plugin_id = p.split('@')[0];
-        //let check if plugin already added
-        plugin_cdv_dir = path.resolve(cordovaRootPath, 'plugins', plugin_id);
-        if (fs.existsSync(plugin_cdv_dir)) {
-            return plugin_id;
-        } else {
-            return false;
-        }
-    };
     runPlugin = function (options, done) {
         //plugin(s) [{add|remove|rm} <PATH|URI>]
             var tasks = [];
@@ -207,20 +192,13 @@ module.exports = function (grunt) {
                 if(cordova_plugins_map[p]){
                     p = cordova_plugins_map[p];
                 }
-                if(options.action == 'add'){
-                    plugin_id = isPluginExists(p,options.path);
-                    if(plugin_id){
-                        skip = true;
-                        grunt.log.writeln('Plugin '+plugin_id+' already exists skipping add'); 
-                    }
-                }
-                if(!skip){
-                    f = function (callback) {
-                        runCordova(['plugin', options.action, p ].concat(options.args), {cwd:options.path}, callback);
-                    };
-                    tasks.push(f);
-                }
-                
+
+                f = function (callback) {
+                    runCordova(['plugin', options.action, p ].concat(options.args), {cwd:options.path}, callback);
+                };
+                tasks.push(f);
+
+
             });
             runCordovaSeries(tasks, done);
     };
