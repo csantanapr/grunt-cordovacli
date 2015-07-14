@@ -31,24 +31,24 @@ module.exports = function (grunt) {
         cordova_bin,
         cordova_cli,
         cordova_plugins_map = {
-            'battery-status':      'org.apache.cordova.battery-status',
-            'camera':              'org.apache.cordova.camera',
-            'console':             'org.apache.cordova.console',
-            'contacts':            'org.apache.cordova.contacts',
-            'device':              'org.apache.cordova.device',
-            'device-motion':       'org.apache.cordova.device-motion',
-            'device-orientation':  'org.apache.cordova.device-orientation',
-            'dialogs':             'org.apache.cordova.dialogs',
-            'file':                'org.apache.cordova.file',
-            'file-transfer':       'org.apache.cordova.file-transfer',
-            'geolocation':         'org.apache.cordova.geolocation',
-            'globalization':       'org.apache.cordova.globalization',
-            'inappbrowser':        'org.apache.cordova.inappbrowser',
-            'media':               'org.apache.cordova.media',
-            'media-capture':       'org.apache.cordova.media-capture',
-            'network-information': 'org.apache.cordova.network-information',
-            'splashscreen':        'org.apache.cordova.splashscreen',
-            'vibration':           'org.apache.cordova.vibration'
+            'battery-status':      'cordova-plugin-battery-status',
+            'camera':              'cordova-plugin-camera',
+            'console':             'cordova-plugin-console',
+            'contacts':            'cordova-plugin-contacts',
+            'device':              'cordova-plugin-device',
+            'device-motion':       'cordova-plugin-device-motion',
+            'device-orientation':  'cordova-plugin-device-orientation',
+            'dialogs':             'cordova-plugin-dialogs',
+            'file':                'cordova-plugin-file',
+            'file-transfer':       'cordova-plugin-file-transfer',
+            'geolocation':         'cordova-plugin-geolocation',
+            'globalization':       'cordova-plugin-globalization',
+            'inappbrowser':        'cordova-plugin-inappbrowser',
+            'media':               'cordova-plugin-media',
+            'media-capture':       'cordova-plugin-media-capture',
+            'network-information': 'cordova-plugin-network-information',
+            'splashscreen':        'cordova-plugin-splashscreen',
+            'vibration':           'cordova-plugin-vibration'
         },
         validPlatforms = [
             'ios',
@@ -237,7 +237,7 @@ module.exports = function (grunt) {
             tasks = [],
             i,
             cordova_relative_path;
-            cordova_cli = options.cli
+            cordova_cli = options.cli;
 
             if ( cordova_cli === 'cca'){
                 cordova_relative_path = '..';
