@@ -120,6 +120,16 @@ cordovacli: {
             platforms: ['android'],
             args: ['--target','Nexus5']
         }
+    },
+    add_facebook_plugin: {
+        options: {
+            command: 'plugin',
+            action: 'add',  
+            plugins: [                 
+                'com.phonegap.plugins.facebookconnect'
+            ],
+            args:['--variable','APP_ID=fb12132424','--variable','APP_NAME=myappname']
+        }
     }
 }
 ```
