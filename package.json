@@ -30,11 +30,11 @@
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "cordova": ">=4.3.0",
-    "cca": ">=0.6.0",
+    "cordova": ">=5.0.0",
+    "cca": ">=0.7.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-nodeunit": "^0.4.1"
   },
   "peerDependencies": {
