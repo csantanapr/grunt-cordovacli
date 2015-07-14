@@ -93,7 +93,7 @@ module.exports = function (grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
-                    plugins: [                      //plugins are fetched from cordova registry plugins.cordova.io
+                    plugins: [                      //plugins are fetched from NPM
                         'battery-status',
                         'camera',
                         'console',
@@ -119,7 +119,7 @@ module.exports = function (grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
-                    plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
+                    plugins: [                      //plugins are fetched from NPM
                         'battery-status',
                         'node_modules/cordova-plugin-camera',
                         'org.apache.cordova.camera'
@@ -131,7 +131,7 @@ module.exports = function (grunt) {
                 options: {
                     command: 'plugin',
                     action: 'add',                  //valid actions for command plugin are add , remove, rm
-                    plugins: [                      //plugins are fetched from Apache Foundation Repo https://git-wip-us.apache.org/repos/asf/
+                    plugins: [                      //plugins are fetched from NPM
                         'battery-status'
                     ]
                 }
@@ -155,6 +155,23 @@ module.exports = function (grunt) {
                 options: {
                     command: 'emulate',
                     platforms: ['android']
+                }
+            },
+            build_android_release: {
+                options: {
+                    command: 'build',
+                    platforms: ['android'],
+                    args: ['--release']
+                }
+            },
+            add_facebook_plugin: {
+                options: {
+                    command: 'plugin',
+                    action: 'add',  
+                    plugins: [                 
+                        'com.phonegap.plugins.facebookconnect'
+                    ],
+                    args:['--variable','APP_ID=fb12132424','--variable','APP_NAME=myappname']
                 }
             }
         },
