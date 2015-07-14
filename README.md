@@ -2,8 +2,8 @@
 
 > "Wraps a web application as a hybrid app with [Apache Cordova CLI](http://cordova.io) or [Crome Cordova Apps CLI](https://github.com/MobileChromeApps/mobile-chrome-apps)"
 
-More information about [Apache Cordova Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
-More information about [Chrome Apps for Mobile](https://github.com/MobileChromeApps/mobile-chrome-apps)
+- More information about [Apache Cordova Command-line Interface](http://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-line%20Interface)
+- More information about [Chrome Apps for Mobile](https://github.com/MobileChromeApps/mobile-chrome-apps)
 
 ## First Install Cordova or CCA
 - This plugin requires Grunt `^0.4.5`
