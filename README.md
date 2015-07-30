@@ -41,7 +41,7 @@ In your project's Gruntfile, add a section named `cordovacli` to the data object
 
 cordovacli: {
     options: {
-        path: 'myHybridAppFolder'
+        path: 'myHybridAppFolder',
         cli: 'cca'  // cca or cordova
     },
     cordova: {
