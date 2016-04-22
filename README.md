@@ -6,7 +6,7 @@
 - More information about [Chrome Apps for Mobile](https://github.com/MobileChromeApps/mobile-chrome-apps)
 
 ## First Install Cordova or CCA
-- This plugin requires Grunt `^0.4.5`
+- This plugin requires Grunt `>=0.4.5`
 - NPM module `cordova-cli` version >=3.0.0 or `cca` >=0.5.1 needs to be install locally or at peer location as node module grunt-cordovacli, or in a node_module directory of the parent directory structure
 ```shell
 npm install cordova@latest --save
