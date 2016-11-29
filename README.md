@@ -216,16 +216,16 @@ Shortcut values for Apache Cordova plugins:
 
 Use with Commands: `'plugin'`
 
-Specify the plugin to add to the Cordova project
-It can be specify in 4 forms:
+Specify the plugin to add to the Cordova project.
+It can be specified in 4 ways:
 
-* Shortcut         (i.e. 'camera' it will be downloaded form plugins.cordova.io)
-* ID or ID@version (i.e. org.apache.cordova.device it will be downloaded from plugins.cordova.io)
+* Shortcut         (i.e. 'camera' It will be downloaded form plugins.cordova.io)
+* ID or ID@version (i.e. org.apache.cordova.device It will be downloaded from plugins.cordova.io)
 * Git Url          (i.e. https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git)
 * Directory Path   (~/userid/cordova/plugins/plugin1)
 
-If using with option.action=add and using ID or ID@version, and plugin is already present, cordova will skip it
-If using remove or rm options.command to remove a plugin only Shortcut  or ID are supported
+If using with option.action=add and using ID or ID@version, and plugin is already present, cordova will skip it.
+If using remove or rm options.command to remove a plugin only Shortcut or ID are supported
 
 ## Contributing
 Biggest contribution you can do is to open issues.
